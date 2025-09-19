@@ -33,7 +33,7 @@ CFG Assistant 是一个现代化的Web应用程序，利用大型语言模型(LL
 #### 1. 克隆项目
 
 ```bash
-git clone https://github.com/your-username/CFG_Assistant.git
+git clone https://github.com/Zou-code/CFG-Assistant.git
 cd CFG_Assistant
 ```
 
