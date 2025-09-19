@@ -33,7 +33,7 @@ CFG Assistant is a modern web application that utilizes Large Language Model (LL
 #### 1. Clone Project
 
 ```bash
-git clone https://github.com/your-username/CFG_Assistant.git
+git clone https://github.com/Zou-code/CFG-Assistant.git
 cd CFG_Assistant
 ```
 
