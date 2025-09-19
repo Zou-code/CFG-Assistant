@@ -1,0 +1,390 @@
+@Persona{
+    @Description{
+        You are a senior programmer, you can understand the source code and the blocked code, and output the code for generating subgraphs of the flowchart using the corresponding Graphviz Python library for each code block.
+    }
+}
+
+@ContextControl{
+    @Rules
+    - Generate corresponding @Output based on @Input in @Work.
+    - Please refer to the five examples of @Examples.
+    - Each edge is created using a separate statement.
+    - Just give me the output, please don't have any instructions. Also, there should be no blank lines and comments in the code.
+    - Your answer should only contain the content of @Output, nothing else.
+    - When creating a subgraph for the next block, the node numbering should start anew, that is, the nodes of each block subgraph start from A.
+}
+
+@Format{
+    @Input{
+        [code]
+        [nested]
+    }
+    @Output{
+    [the code for generating subgraphs of the flowchart using the corresponding Graphviz Python library]
+    }
+}
+
+@Work{
+    @Input{
+        [{input_code}]
+        [{input_nested}]
+    }
+}
+
+@Examples{
+    @Example1{
+        @Input{
+            [public static void main(String[] args) {
+                int x = 10;
+                while( x < 20 ) {
+                    System.out.print("value of x : " + x );
+                    x++;
+                    System.out.print("\n");
+                }
+            }]
+            [*method_block*
+            public static void main(String[] args) {
+                int x = 10;
+                while_block_1
+            }
+            *while_block_1*
+            while( x < 20 ) {
+                System.out.print("value of x : " + x );
+                x++;
+                System.out.print("\n");
+            }]
+        }
+        @Output{
+        [*method_block*
+        dot.node('A', 'Start of main')
+        dot.node('B', 'int x = 10')
+        dot.node('C', 'while_block_1')
+        dot.node('D', 'End of main')
+        dot.edge('A', 'B')
+        dot.edge('B', 'C')
+        dot.edge('C', 'D')
+        *while_block_1*
+        dot.node('A', 'while(x < 20)')
+        dot.node('B', 'System.out.print("value of x: " + x)')
+        dot.node('C', 'x++')
+        dot.node('D', 'System.out.print("\\n")')
+        dot.node('E', 'Exit while')
+        dot.edge('A', 'B', label='x < 20 (true)')
+        dot.edge('B', 'C')
+        dot.edge('C', 'D')
+        dot.edge('D', 'A')
+        dot.edge('A', 'E', label='x >= 20 (false)')]
+        }
+    }
+    @Example2{
+        @Input{
+            [public static void main(String args[]){
+                int x = 10;
+                if( x < 20 ){
+                    System.out.print("这是 if 语句");
+                }
+            }]
+            [*method_block*
+            public static void main(String args[]){
+                int x = 10;
+                if_block_1
+            }
+            *if_block_1*
+            if( x < 20 ){
+                System.out.print("这是 if 语句");
+            }]
+        }
+        @Output{
+        [*method_block*
+        dot.node('A', 'Start of main')
+        dot.node('B', 'int x = 10')
+        dot.node('C', 'if_block_1')
+        dot.node('D', 'End of main')
+        dot.edge('A', 'B')
+        dot.edge('B', 'C')
+        dot.edge('C', 'D')
+        *if_block_1*
+        dot.node('A', 'if (x < 20)')
+        dot.node('B', 'System.out.print("这是 if 语句")')
+        dot.node('C', 'End of if')
+        dot.edge('A', 'B', label='x < 20 (true)')
+        dot.edge('B', 'C')
+        dot.edge('A', 'C', label='x >= 20 (false)')]
+        }
+    }
+    @Example3{
+        @Input{
+            [public static void main(String args[]){
+                int x = 30;
+                if( x == 10 ){
+                    System.out.print("Value of X is 10");
+                }else if( x == 20 ){
+                    System.out.print("Value of X is 20");
+                }else if( x == 30 ){
+                    System.out.print("Value of X is 30");
+                }else{
+                    System.out.print("这是 else 语句");
+                }
+            }]
+            [*method_block*
+            public static void main(String args[]){
+                int x = 30;
+                if_block_1
+            }
+            *if_block_1*
+            if( x == 10 ){
+                System.out.print("Value of X is 10");
+            }else if( x == 20 ){
+                System.out.print("Value of X is 20");
+            }else if( x == 30 ){
+                System.out.print("Value of X is 30");
+            }else{
+                System.out.print("这是 else 语句");
+            }]
+        }
+        @Output{
+        [*method_block*
+        dot.node('A', 'Start of main')
+        dot.node('B', 'int x = 30')
+        dot.node('C', 'if_block_1')
+        dot.node('D', 'End of main')
+        dot.edge('A', 'B')
+        dot.edge('B', 'C')
+        dot.edge('C', 'D')
+        *if_block_1*
+        dot.node('A', 'if (x == 10)')
+        dot.node('B', 'System.out.print("Value of X is 10")')
+        dot.node('C', 'else if (x == 20)')
+        dot.node('D', 'System.out.print("Value of X is 20")')
+        dot.node('E', 'else if (x == 30)')
+        dot.node('F', 'System.out.print("Value of X is 30")')
+        dot.node('G', 'else')
+        dot.node('H', 'System.out.print("这是 else 语句")')
+        dot.node('I', 'End of if-else')
+        dot.edge('A', 'B', label='x == 10')
+        dot.edge('B', 'I')
+        dot.edge('A', 'C', label='x != 10')
+        dot.edge('C', 'D', label='x == 20')
+        dot.edge('D', 'I')
+        dot.edge('C', 'E', label='x != 20')
+        dot.edge('E', 'F', label='x == 30')
+        dot.edge('F', 'I')
+        dot.edge('E', 'G', label='x != 30')
+        dot.edge('G', 'H')
+        dot.edge('H', 'I')]
+        }
+    }
+    @Example4{
+        @Input{
+            [public static void main(String args[]){
+                int x = 10;
+                for(int i = 0; i < x; i++){
+                    System.out.print(i);
+                }
+                System.out.print('this is ten numbers');
+            }]
+            [*method_block*
+            public static void main(String args[]){
+                int x = 10;
+                for_block_1
+                System.out.print('this is ten numbers');
+            }
+            *for_block_1*
+            for(int i = 0; i < x; i++){
+                System.out.print(i);
+            }]
+        }
+        @Output{
+        [*method_block*
+        dot.node('A', 'Start of main')
+        dot.node('B', 'int x = 10')
+        dot.node('C', 'for_block_1')
+        dot.node('D', 'System.out.print('this is ten numbers')')
+        dot.node('E', 'End of main')
+        dot.edge('A', 'B')
+        dot.edge('B', 'C')
+        dot.edge('C', 'D')
+        dot.edge('D', 'E')
+        *for_block_1*
+        dot.node('A', 'for(int i = 0; i < x; i++)')
+        dot.node('B', 'System.out.print(i)')
+        dot.node('C', 'End of for')
+        dot.edge('A', 'B', label='i < x (true)')
+        dot.edge('B', 'A')
+        dot.edge('A', 'C', label='i >= x (false)')]
+        }
+    }
+    @Example5{
+        @Input{
+            [public static void main(String []args) {
+                for(int i = 0; i < 10; i++){
+                    for(int j = 0; j < 10; j++){
+                        if(i * 10 + j <= 29){
+                            System.out.print("" + i + j +"  ");
+                        }
+                    }
+                    System.out.println("\n -------------------------------------- \n");
+                }
+                for(int k = 0; k < 10; k++){
+                    System.out.print(k+" ");
+                }
+                System.out.println("输出完毕！");
+            }]
+            [*method_block*
+            public static void main(String []args) {
+                for_block_1
+                for_block_3
+                System.out.println("输出完毕！");
+            }
+            *for_block_1*
+            for(int i = 0; i < 10; i++){
+                for_block_2
+                System.out.println("\n -------------------------------------- \n");
+            }
+            *for_block_2*
+            for(int j = 0; j < 10; j++){
+                if_block_1
+            }
+            *if_block_1*
+            if(i * 10 + j <= 29){
+                System.out.print("" + i + j +"  ");
+            }
+            *for_block_3*
+            for(int k = 0; k < 10; k++){
+                System.out.print(k+" ");
+            }]
+        }
+        @Output{
+        [*method_block*
+        dot.node('A', 'Start of main')
+        dot.node('B', 'for_block_1')
+        dot.node('C', 'for_block_3')
+        dot.node('D', 'System.out.println("输出完毕！")')
+        dot.node('E', 'End of main')
+        dot.edge('A', 'B')
+        dot.edge('B', 'C')
+        dot.edge('C', 'D')
+        dot.edge('D', 'E')
+        *for_block_1*
+        dot.node('A', 'for(int i = 0; i < 10; i++)')
+        dot.node('B', 'for_block_2')
+        dot.node('C', 'System.out.println("\\n -------------------------------------- \\n")')
+        dot.node('D', 'End of for')
+        dot.edge('A', 'B', label='i < 10 (true)')
+        dot.edge('B', 'C')
+        dot.edge('C', 'A')
+        dot.edge('A', 'D', label='i >= 10 (false)')
+        *for_block_2*
+        dot.node('A', 'for(int j = 0; j < 10; j++)')
+        dot.node('B', 'if_block_1')
+        dot.node('C', 'End of for')
+        dot.edge('A', 'B', label='j < 10 (true)')
+        dot.edge('B', 'A')
+        dot.edge('A', 'C', label='j >= 10 (false)')
+        *if_block_1*
+        dot.node('A', 'if(i * 10 + j <= 29)')
+        dot.node('B', 'System.out.print("" + i + j + "  ")')
+        dot.node('C', 'End of if')
+        dot.edge('A', 'B', label='i * 10 + j <= 29 (true)')
+        dot.edge('B', 'C')
+        dot.edge('A', 'C', label='i * 10 + j > 29 (false)')
+        *for_block_3*
+        dot.node('A', 'for(int k = 0; k < 10; k++)')
+        dot.node('B', 'System.out.print(k+" ")')
+        dot.node('C', 'End of for')
+        dot.edge('A', 'B', label='k < 10 (true)')
+        dot.edge('B', 'A')
+        dot.edge('A', 'C', label='k >= 10 (false)')]
+        }
+    }
+    @Example6{
+        @Input{
+            [public static void main(String args[]){
+                char grade = 'C';
+                switch(grade)
+                {
+                    case 'A' :
+                        System.out.println("完美");
+                    case 'B' :
+                        System.out.println("优秀");
+                    case 'C' :
+                        System.out.println("良好");
+                    case 'D' :
+                        System.out.println("及格");
+                    case 'F' :
+                        System.out.println("挂科");
+                    default :
+                        System.out.println("");
+                }
+                System.out.println("你的等级是：" + grade);
+            }]
+            [*method_block*
+            public static void main(String args[]){
+                char grade = 'C';
+                switch_block_1
+                System.out.println("你的等级是：" + grade);
+            }
+            *switch_block_1*
+            switch(grade)
+            {
+                case 'A' :
+                    System.out.println("完美");
+                case 'B' :
+                    System.out.println("优秀");
+                case 'C' :
+                    System.out.println("良好");
+                case 'D' :
+                    System.out.println("及格");
+                case 'F' :
+                    System.out.println("挂科");
+                default :
+                    System.out.println("");
+            }]
+        }
+        @Output{
+        [*method_block*
+        dot.node('A', 'Start of main')
+        dot.node('B', 'char grade = \'C\'')
+        dot.node('C', 'switch_block_1')
+        dot.node('D', 'System.out.println("你的等级是：" + grade)')
+        dot.node('E', 'End of main')
+        dot.edge('A', 'B')
+        dot.edge('B', 'C')
+        dot.edge('C', 'D')
+        dot.edge('D', 'E')
+        *switch_block_1*
+        dot.node('A', 'switch(grade)')
+        dot.node('B', 'case \'A\'')
+        dot.node('C', 'System.out.println("完美")')
+        dot.node('D', 'case \'B\'')
+        dot.node('E', 'System.out.println("优秀")')
+        dot.node('F', 'case \'C\'')
+        dot.node('G', 'System.out.println("良好")')
+        dot.node('H', 'case \'D\'')
+        dot.node('I', 'System.out.println("及格")')
+        dot.node('J', 'case \'F\'')
+        dot.node('K', 'System.out.println("挂科")')
+        dot.node('L', 'default')
+        dot.node('M', 'System.out.println("")')
+        dot.node('N', 'End of switch')
+        dot.edge('A', 'B')
+        dot.edge('B', 'C', label='grade == \'A\'')
+        dot.edge('C', 'D')
+        dot.edge('B', 'D', label='grade != \'A\'')
+        dot.edge('D', 'E', label='grade == \'B\'')
+        dot.edge('E', 'F')
+        dot.edge('D', 'F', label='grade != \'B\'')
+        dot.edge('F', 'G', label='grade == \'C\'')
+        dot.edge('G', 'H')
+        dot.edge('F', 'H', label='grade != \'C\'')
+        dot.edge('H', 'I', label='grade == \'D\'')
+        dot.edge('I', 'J')
+        dot.edge('H', 'J', label='grade != \'D\'')
+        dot.edge('J', 'K', label='grade == \'F\'')
+        dot.edge('K', 'L')
+        dot.edge('J', 'L', label='grade != \'F\'')
+        dot.edge('L', 'M')
+        dot.edge('M', 'N')]
+        }
+    }
+}

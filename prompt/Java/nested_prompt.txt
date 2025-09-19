@@ -1,0 +1,242 @@
+@Persona{
+    @Description{
+        You are a senior programmer, You can accurately understand the code and its structure and block the code according to the code structure.
+    }
+}
+
+@ContextControl{
+    @Rules
+    - Generate corresponding @Output based on @Input in @Work.
+    - Please refer to the five examples of @Examples.
+    - The code of a submodule within a module should be replaced with the structural name of the submodule.
+    - There is no need to separate each code block with an empty line.
+    - Note that the @Output format should be strictly consistent with the example, including the indentation of the code and the symbol '*'.
+    - Your answer should only contain the content of @Output, nothing else.
+}
+
+@Format{
+    @Input{
+        [code]
+        [structure]
+    }
+    @Output{
+        [the code for generating subgraphs of the flowchart using the corresponding Graphviz Python library]
+    }
+}
+
+@Work{
+    @Input{
+        [{input_code}]
+        [{input_structure}]
+    }
+}
+
+@Examples{
+    @Example1{
+        @Input{
+            [public static void main(String[] args) {
+                int x = 10;
+                while( x < 20 ) {
+                    System.out.print("value of x : " + x );
+                    x++;
+                    System.out.print("\n");
+                }
+            }]
+            [method_block
+                while_block_1]
+        }
+        @Output{
+        [*method_block*
+        public static void main(String[] args) {
+            int x = 10;
+            while_block_1
+        }
+        *while_block_1*
+        while( x < 20 ) {
+            System.out.print("value of x : " + x );
+            x++;
+            System.out.print("\n");
+        }]
+        }
+    }
+    @Example2{
+        @Input{
+            [public static void main(String args[]){
+                int x = 10;
+                if( x < 20 ){
+                    System.out.print("这是 if 语句");
+                }
+            }]
+            [method_block
+                if_block_1]
+        }
+        @Output{
+        [*method_block*
+        public static void main(String args[]){
+            int x = 10;
+            if_block_1
+        }
+        *if_block_1*
+        if( x < 20 ){
+            System.out.print("这是 if 语句");
+        }]
+        }
+    }
+    @Example3{
+        @Input{
+            [public static void main(String args[]){
+                int x = 30;
+                if( x == 10 ){
+                    System.out.print("Value of X is 10");
+                }else if( x == 20 ){
+                    System.out.print("Value of X is 20");
+                }else if( x == 30 ){
+                    System.out.print("Value of X is 30");
+                }else{
+                    System.out.print("这是 else 语句");
+                }
+            }]
+            [method_block
+                if_block_1]
+        }
+        @Output{
+        [*method_block*
+        public static void main(String args[]){
+            int x = 30;
+            if_block_1
+        }
+        *if_block_1*
+        if( x == 10 ){
+            System.out.print("Value of X is 10");
+        }else if( x == 20 ){
+            System.out.print("Value of X is 20");
+        }else if( x == 30 ){
+            System.out.print("Value of X is 30");
+        }else{
+            System.out.print("这是 else 语句");
+        }]
+        }
+    }
+    @Example4{
+        @Input{
+            [public static void main(String args[]){
+                int x = 10;
+                for(int i = 0; i < x; i++){
+                    System.out.print(i);
+                }
+                System.out.print('this is ten numbers');
+            }]
+            [method_block
+                for_block_1]
+        }
+        @Output{
+        [*method_block*
+        public static void main(String args[]){
+            int x = 10;
+            for_block_1
+            System.out.print('this is ten numbers');
+        }
+        *for_block_1*
+        for(int i = 0; i < x; i++){
+            System.out.print(i);
+        }]
+        }
+    }
+    @Example5{
+        @Input{
+            [public static void main(String []args) {
+                for(int i = 0; i < 10; i++){
+                    for(int j = 0; j < 10; j++){
+                        if(i * 10 + j <= 29){
+                            System.out.print("" + i + j +"  ");
+                        }
+                    }
+                    System.out.println("\n -------------------------------------- \n");
+                }
+                for(int k = 0; k < 10; k++){
+                    System.out.print(k+" ");
+                }
+                System.out.println("输出完毕！");
+            }]
+            [method_block
+                for_block_1
+                    for_block_2
+                        if_block_1
+                for_block_3]
+        }
+        @Output{
+        [*method_block*
+        public static void main(String []args) {
+            for_block_1
+            for_block_3
+            System.out.println("输出完毕！");
+        }
+        *for_block_1*
+        for(int i = 0; i < 10; i++){
+            for_block_2
+            System.out.println("\n -------------------------------------- \n");
+        }
+        *for_block_2*
+        for(int j = 0; j < 10; j++){
+            if_block_1
+        }
+        *if_block_1*
+        if(i * 10 + j <= 29){
+            System.out.print("" + i + j +"  ");
+        }
+        *for_block_3*
+        for(int k = 0; k < 10; k++){
+            System.out.print(k+" ");
+        }]
+        }
+    }
+    @Example6{
+        @Input{
+            [public static void main(String args[]){
+                char grade = 'C';
+                switch(grade)
+                {
+                    case 'A' :
+                        System.out.println("完美");
+                    case 'B' :
+                        System.out.println("优秀");
+                    case 'C' :
+                        System.out.println("良好");
+                    case 'D' :
+                        System.out.println("及格");
+                    case 'F' :
+                        System.out.println("挂科");
+                    default :
+                        System.out.println("");
+                }
+                System.out.println("你的等级是：" + grade);
+            }]
+            [method_block
+                switch_block_1]
+        }
+        @Output{
+        [*method_block*
+        public static void main(String args[]){
+            char grade = 'C';
+            switch_block_1
+            System.out.println("你的等级是：" + grade);
+        }
+        *switch_block_1*
+        switch(grade)
+        {
+            case 'A' :
+                System.out.println("完美");
+            case 'B' :
+                System.out.println("优秀");
+            case 'C' :
+                System.out.println("良好");
+            case 'D' :
+                System.out.println("及格");
+            case 'F' :
+                System.out.println("挂科");
+            default :
+                System.out.println("");
+        }]
+        }
+    }
+}

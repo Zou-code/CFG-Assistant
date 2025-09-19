@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>图片显示测试</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #fafafa;
+        }
+        .test-image {
+            max-width: 100%;
+            height: auto;
+            border: 2px solid #ccc;
+            margin: 10px 0;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+        }
+        .success {
+            color: green;
+            font-weight: bold;
+        }
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🖼️ CFG 图片显示测试</h1>
+        <p>这个页面用于测试CFG图片显示功能</p>
+        
+        <div class="test-section">
+            <h3>测试1: 静态图片URL</h3>
+            <p>测试图片: <code id="imageUrl">/static/cfg_235d7216604747aaae7e430c0f21b2ef.png</code></p>
+            <button onclick="loadStaticImage()">加载静态图片</button>
+            <div id="staticImageResult"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>测试2: 动态生成图片</h3>
+            <button onclick="generateAndShow()">生成并显示CFG</button>
+            <div id="dynamicImageResult"></div>
+        </div>
+        
+        <div class="test-section">
+            <h3>测试3: 手动输入URL测试</h3>
+            <input type="text" id="manualUrl" placeholder="输入图片URL" style="width: 400px; padding: 5px;">
+            <button onclick="testManualUrl()">测试URL</button>
+            <div id="manualImageResult"></div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:8000';
+
+        function loadStaticImage() {
+            const url = '/static/cfg_235d7216604747aaae7e430c0f21b2ef.png';
+            const resultDiv = document.getElementById('staticImageResult');
+            
+            console.log('加载静态图片:', url);
+            resultDiv.innerHTML = `
+                <p>正在加载图片: <code>${url}</code></p>
+                <img src="${API_BASE}${url}" alt="测试图片" class="test-image" 
+                     onload="this.style.border='2px solid green'; this.nextElementSibling.className='success'; this.nextElementSibling.textContent='✅ 图片加载成功'"
+                     onerror="this.style.border='2px solid red'; this.nextElementSibling.className='error'; this.nextElementSibling.textContent='❌ 图片加载失败'">
+                <div>等待结果...</div>
+            `;
+        }
+
+        async function generateAndShow() {
+            const resultDiv = document.getElementById('dynamicImageResult');
+            resultDiv.innerHTML = '<p>🔄 正在生成CFG...</p>';
+            
+            try {
+                const response = await fetch(`${API_BASE}/api/cfg/generate`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        code: 'def test():\n    if True:\n        return 1\n    else:\n        return 0',
+                        language: 'Python',
+                        model_name: 'gpt-3.5-turbo',
+                        client_name: 'openai',
+                        temperature: 0
+                    })
+                });
+
+                const data = await response.json();
+                console.log('生成响应:', data);
+
+                if (response.ok && data.success) {
+                    const fullImageUrl = `${API_BASE}${data.image_url}`;
+                    resultDiv.innerHTML = `
+                        <p class="success">✅ CFG生成成功</p>
+                        <p>Graph Code: <code>${data.graph_code ? data.graph_code.substring(0, 100) + '...' : '无'}</code></p>
+                        <p>图片URL: <code>${data.image_url}</code></p>
+                        <img src="${fullImageUrl}" alt="生成的CFG" class="test-image"
+                             onload="this.style.border='2px solid green'; this.nextElementSibling.className='success'; this.nextElementSibling.textContent='✅ 图片显示成功'"
+                             onerror="this.style.border='2px solid red'; this.nextElementSibling.className='error'; this.nextElementSibling.textContent='❌ 图片显示失败'">
+                        <div>等待结果...</div>
+                    `;
+                } else {
+                    resultDiv.innerHTML = `<p class="error">❌ 生成失败: ${data.message || '未知错误'}</p>`;
+                }
+            } catch (error) {
+                resultDiv.innerHTML = `<p class="error">❌ 网络错误: ${error.message}</p>`;
+                console.error('网络错误:', error);
+            }
+        }
+
+        function testManualUrl() {
+            const url = document.getElementById('manualUrl').value;
+            const resultDiv = document.getElementById('manualImageResult');
+            
+            if (!url) {
+                resultDiv.innerHTML = '<p class="error">请输入URL</p>';
+                return;
+            }
+
+            console.log('测试手动URL:', url);
+            resultDiv.innerHTML = `
+                <p>测试URL: <code>${url}</code></p>
+                <img src="${url}" alt="手动测试图片" class="test-image"
+                     onload="this.style.border='2px solid green'; this.nextElementSibling.className='success'; this.nextElementSibling.textContent='✅ 图片加载成功'"
+                     onerror="this.style.border='2px solid red'; this.nextElementSibling.className='error'; this.nextElementSibling.textContent='❌ 图片加载失败'">
+                <div>等待结果...</div>
+            `;
+        }
+
+        // 页面加载时自动测试静态图片
+        window.addEventListener('load', function() {
+            console.log('页面加载完成，开始自动测试...');
+            setTimeout(loadStaticImage, 1000);
+        });
+    </script>
+</body>
+</html>

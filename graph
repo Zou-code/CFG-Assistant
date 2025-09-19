@@ -1,0 +1,22 @@
+digraph {
+	node [fontname=SimSun]
+	A [label="Start of heapsort"]
+	B [label="for (int i = 0; i < a.length; i++)"]
+	C [label="for (int j = i * 3 + 1; j < i * 3 + 4; j++)"]
+	D [label="if (j < a.length)"]
+	E [label="if (a[j] < a[i])"]
+	F [label="switchPos(a, i, j)"]
+	G [label="heapsort(a)"]
+	H [label="End of heapsort"]
+	A -> B
+	B -> C [label="i < a.length (true)"]
+	C -> D [label="j < i * 3 + 4 (true)"]
+	D -> E [label="j < a.length (true)"]
+	E -> F [label="a[j] < a[i] (true)"]
+	F -> G
+	G -> C
+	E -> C [label="a[j] >= a[i] (false)"]
+	D -> C [label="j >= a.length (false)"]
+	C -> B [label="j >= i * 3 + 4 (false)"]
+	B -> H [label="i >= a.length (false)"]
+}

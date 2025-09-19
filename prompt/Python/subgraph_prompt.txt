@@ -1,0 +1,355 @@
+@Persona{
+    @Description{
+        You are a senior programmer, you can understand the source code and the blocked code, and output the code for generating subgraphs of the flowchart using the corresponding Graphviz Python library for each code block.
+    }
+}
+
+@ContextControl{
+    @Rules
+    - Generate corresponding @Output based on @Input in @Work.
+    - Please refer to the six examples of @Examples.
+    - Each edge is created using a separate statement.
+    - Just give me the output, please don't have any instructions. Also, there should be no blank lines and comments in the code.
+    - Your answer should only contain the content of @Output, nothing else.
+    - When creating a subgraph for the next block, the node numbering should start anew, that is, the nodes of each block subgraph start from A.
+    - Except for the start node and end node, the names of the other nodes are the corresponding statement contents.
+}
+
+@Format{
+    @Input{
+        [code]
+        [nested]
+    }
+    @Output{
+    [the code for generating subgraphs of the flowchart using the corresponding Graphviz Python library]
+    }
+}
+
+@Work{
+    @Input{
+        [{input_code}]
+        [{input_nested}]
+    }
+}
+
+@Examples{
+    @Example1{
+        @Input{
+            [if __name__ == "__main__":
+                x = 10
+                while x < 20:
+                    print("value of x :", x)
+                    x += 1]
+            [*method_block*
+            if __name__ == "__main__":
+                x = 10
+                while_block_1
+            *while_block_1*
+            while x < 20:
+                print("value of x :", x)
+                x += 1]
+        }
+        @Output{
+        [*method_block*
+        dot.node('A', 'Start of main')
+        dot.node('B', 'x = 10')
+        dot.node('C', 'while_block_1')
+        dot.node('D', 'End of main')
+        dot.edge('A', 'B')
+        dot.edge('B', 'C')
+        dot.edge('C', 'D')
+        *while_block_1*
+        dot.node('A', 'while x < 20:')
+        dot.node('B', 'print("value of x :", x)')
+        dot.node('C', 'x += 1')
+        dot.node('D', 'Exit while')
+        dot.edge('A', 'B', label='x < 20 (true)')
+        dot.edge('B', 'C')
+        dot.edge('C', 'A')
+        dot.edge('A', 'D', label='x >= 20 (false)')]
+        }
+    }
+    @Example2{
+        @Input{
+            [if __name__ == "__main__":
+                x = 10
+                if x < 20:
+                    print("这是 if 语句")]
+            [*method_block*
+            if __name__ == "__main__":
+                x = 10
+                if_block_1
+            *if_block_1*
+            if x < 20:
+                print("这是 if 语句")]
+        }
+        @Output{
+        [*method_block*
+        dot.node('A', 'Start of main')
+        dot.node('B', 'x = 10')
+        dot.node('C', 'if_block_1')
+        dot.node('D', 'End of main')
+        dot.edge('A', 'B')
+        dot.edge('B', 'C')
+        dot.edge('C', 'D')
+        *if_block_1*
+        dot.node('A', 'if x < 20:')
+        dot.node('B', 'print("这是 if 语句")')
+        dot.node('C', 'End of if')
+        dot.edge('A', 'B', label='x < 20 (true)')
+        dot.edge('B', 'C')
+        dot.edge('A', 'C', label='x >= 20 (false)')]
+        }
+    }
+    @Example3{
+        @Input{
+            [if __name__ == "__main__":
+                x = 30
+                if x == 10:
+                    print("Value of X is 10")
+                elif x == 20:
+                    print("Value of X is 20")
+                elif x == 30:
+                    print("Value of X is 30")
+                else:
+                    print("这是 else 语句")]
+            [*method_block*
+            if __name__ == "__main__":
+                x = 30
+                if_block_1
+            *if_block_1*
+            if x == 10:
+                print("Value of X is 10")
+            elif x == 20:
+                print("Value of X is 20")
+            elif x == 30:
+                print("Value of X is 30")
+            else:
+                print("这是 else 语句")]
+        }
+        @Output{
+        [*method_block*
+        dot.node('A', 'Start of main')
+        dot.node('B', 'x = 30')
+        dot.node('C', 'if_block_1')
+        dot.node('D', 'End of main')
+        dot.edge('A', 'B')
+        dot.edge('B', 'C')
+        dot.edge('C', 'D')
+        *if_block_1*
+        dot.node('A', 'if x == 10:')
+        dot.node('B', 'print("Value of X is 10")')
+        dot.node('C', 'elif x == 20:')
+        dot.node('D', 'print("Value of X is 20")')
+        dot.node('E', 'elif x == 30:')
+        dot.node('F', 'print("Value of X is 30")')
+        dot.node('G', 'else:')
+        dot.node('H', 'print("这是 else 语句")')
+        dot.node('I', 'End of if-else')
+        dot.edge('A', 'B', label='x == 10')
+        dot.edge('B', 'I')
+        dot.edge('A', 'C', label='x != 10')
+        dot.edge('C', 'D', label='x == 20')
+        dot.edge('D', 'I')
+        dot.edge('C', 'E', label='x != 20')
+        dot.edge('E', 'F', label='x == 30')
+        dot.edge('F', 'I')
+        dot.edge('E', 'G', label='x != 30')
+        dot.edge('G', 'H')
+        dot.edge('H', 'I')]
+        }
+    }
+    @Example4{
+        @Input{
+            [if __name__ == "__main__":
+                x = 10
+                for i in range(x):
+                    print(i, end='')
+                print('this is ten numbers')]
+            [*method_block*
+            if __name__ == "__main__":
+                x = 10
+                for_block_1
+                print('this is ten numbers')
+            *for_block_1*
+            for i in range(x):
+                print(i, end='')]
+        }
+        @Output{
+        [*method_block*
+        dot.node('A', 'Start of main')
+        dot.node('B', 'x = 10')
+        dot.node('C', 'for_block_1')
+        dot.node('D', 'print("this is ten numbers")')
+        dot.node('E', 'End of main')
+        dot.edge('A', 'B')
+        dot.edge('B', 'C')
+        dot.edge('C', 'D')
+        dot.edge('D', 'E')
+        *for_block_1*
+        dot.node('A', 'for i in range(x):')
+        dot.node('B', 'print(i, end="")')
+        dot.node('C', 'End of for')
+        dot.edge('A', 'B', label='i < x (true)')
+        dot.edge('B', 'A')
+        dot.edge('A', 'C', label='i >= x (false)')]
+        }
+    }
+    @Example5{
+        @Input{
+            [if __name__ == "__main__":
+                for i in range(10):
+                    for j in range(10):
+                        if i * 10 + j <= 29:
+                            print(f"{i}{j}  ", end='')
+                    print("\n -------------------------------------- \n")
+                for k in range(10):
+                    print(k, end=' ')
+                print("输出完毕！")]
+            [*method_block*
+            if __name__ == "__main__":
+                for_block_1
+                for_block_3
+                print("输出完毕！")
+            *for_block_1*
+            for i in range(10):
+                for_block_2
+                print("\n -------------------------------------- \n")
+            *for_block_2*
+            for j in range(10):
+                if_block_1
+            *if_block_1*
+            if i * 10 + j <= 29:
+                print(f"{i}{j}  ", end='')
+            *for_block_3*
+            for k in range(10):
+                print(k, end=' ')]
+        }
+        @Output{
+        [*method_block*
+        dot.node('A', 'Start of main')
+        dot.node('B', 'for_block_1')
+        dot.node('C', 'for_block_3')
+        dot.node('D', 'print("输出完毕！")')
+        dot.node('E', 'End of main')
+        dot.edge('A', 'B')
+        dot.edge('B', 'C')
+        dot.edge('C', 'D')
+        dot.edge('D', 'E')
+        *for_block_1*
+        dot.node('A', 'for i in range(10):')
+        dot.node('B', 'for_block_2')
+        dot.node('C', 'print("\n -------------------------------------- \n")')
+        dot.node('D', 'End of for')
+        dot.edge('A', 'B', label='i < 10 (true)')
+        dot.edge('B', 'C')
+        dot.edge('C', 'A')
+        dot.edge('A', 'D', label='i >= 10 (false)')
+        *for_block_2*
+        dot.node('A', 'for j in range(10):')
+        dot.node('B', 'if_block_1')
+        dot.node('C', 'End of for')
+        dot.edge('A', 'B', label='j < 10 (true)')
+        dot.edge('B', 'A')
+        dot.edge('A', 'C', label='j >= 10 (false)')
+        *if_block_1*
+        dot.node('A', 'if i * 10 + j <= 29:')
+        dot.node('B', 'print(f"{i}{j}  ", end="")')
+        dot.node('C', 'End of if')
+        dot.edge('A', 'B', label='i * 10 + j <= 29 (true)')
+        dot.edge('B', 'C')
+        dot.edge('A', 'C', label='i * 10 + j > 29 (false)')
+        *for_block_3*
+        dot.node('A', 'for k in range(10):')
+        dot.node('B', 'print(k, end=" ")')
+        dot.node('C', 'End of for')
+        dot.edge('A', 'B', label='k < 10 (true)')
+        dot.edge('B', 'A')
+        dot.edge('A', 'C', label='k >= 10 (false)')]
+        }
+    }
+    @Example6{
+        @Input{
+            [if __name__ == "__main__":
+                grade = 'C'
+                match grade:
+                    case 'A':
+                        print("完美")
+                    case 'B':
+                        print("优秀")
+                    case 'C':
+                        print("良好")
+                    case 'D':
+                        print("及格")
+                    case 'F':
+                        print("挂科")
+                    case _:
+                        print("")
+                print("你的等级是：", grade)]
+            [*method_block*
+            if __name__ == "__main__":
+                grade = 'C'
+                match_block_1
+                print("你的等级是：", grade)
+            *match_block_1*
+            match grade:
+                case 'A':
+                    print("完美")
+                case 'B':
+                    print("优秀")
+                case 'C':
+                    print("良好")
+                case 'D':
+                    print("及格")
+                case 'E':
+                    print("挂科")
+                case _:
+                    print("")]
+        }
+        @Output{
+        [*method_block*
+        dot.node('A', 'Start of main')
+        dot.node('B', 'grade = "C"')
+        dot.node('C', 'match_block_1')
+        dot.node('D', 'print("你的等级是：", grade)')
+        dot.node('E', 'End of main')
+        dot.edge('A', 'B')
+        dot.edge('B', 'C')
+        dot.edge('C', 'D')
+        dot.edge('D', 'E')
+        *match_block_1*
+        dot.node('A', 'match grade:')
+        dot.node('B', 'case "A":')
+        dot.node('C', 'print("完美")')
+        dot.node('D', 'case "B":')
+        dot.node('E', 'print("优秀")')
+        dot.node('F', 'case "C":')
+        dot.node('G', 'print("良好")')
+        dot.node('H', 'case "D":')
+        dot.node('I', 'print("及格")')
+        dot.node('J', 'case "E":')
+        dot.node('K', 'print("挂科")')
+        dot.node('L', 'case _:')
+        dot.node('M', 'print("")')
+        dot.node('N', 'End of match')
+        dot.edge('A', 'B')
+        dot.edge('B', 'C', label='grade == "A"')
+        dot.edge('C', 'D')
+        dot.edge('B', 'D', label='grade != "A"')
+        dot.edge('D', 'E', label='grade == "B"')
+        dot.edge('E', 'F')
+        dot.edge('D', 'F', label='grade != "B"')
+        dot.edge('F', 'G', label='grade == "C"')
+        dot.edge('G', 'H')
+        dot.edge('F', 'H', label='grade != "C"')
+        dot.edge('H', 'I', label='grade == "D"')
+        dot.edge('I', 'J')
+        dot.edge('H', 'J', label='grade != "D"')
+        dot.edge('J', 'K', label='grade == "E"')
+        dot.edge('K', 'L')
+        dot.edge('J', 'L', label='grade != "E"')
+        dot.edge('L', 'M')
+        dot.edge('M', 'N')]
+        }
+    }
+}

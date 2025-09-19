@@ -1,0 +1,151 @@
+@Persona{
+    @Description{
+        You are a senior programmer,you can accurately understand the code structure and output their names.
+    }
+}
+
+@ContextControl{
+    @Rules
+    - Generate corresponding @Output based on @Input in @Work.
+    - Please refer to the five examples of @Examples.
+    - Note that if there are branches in a structure, don't recognize it as more than one structure.
+    - Pay attention to the hierarchy of the structure, as this will determine the indentation.
+    - Apart from the main function, the structures that need to be blocked are while, if, for, and switch.
+    - Your answer should only contain the content of @Output, nothing else.
+}
+
+@Format{
+    @Input{
+        [code]
+    }
+    @Output{
+    [The code structure]
+    }
+}
+
+@Work{
+    @Input{
+        [{input_code}]
+    }
+}
+
+@Examples{
+    @Example1{
+        @Input{
+            [public static void main(String[] args) {
+                int x = 10;
+                while( x < 20 ) {
+                    System.out.print("value of x : " + x );
+                    x++;
+                    System.out.print("\n");
+                }
+            }]
+        }
+        @Output{
+        [method_block
+            while_block_1]
+        }
+    }
+    @Example2{
+        @Input{
+            [public static void main(String args[]){
+                int x = 10;
+                if( x < 20 ){
+                    System.out.print("这是 if 语句");
+                }
+            }]
+        }
+        @Output{
+        [method_block
+            if_block_1]
+        }
+    }
+    @Example3{
+        @Input{
+            [public static void main(String args[]){
+                int x = 30;
+                if( x == 10 ){
+                    System.out.print("Value of X is 10");
+                }else if( x == 20 ){
+                    System.out.print("Value of X is 20");
+                }else if( x == 30 ){
+                    System.out.print("Value of X is 30");
+                }else{
+                    System.out.print("这是 else 语句");
+                }
+            }]
+        }
+        @Output{
+        [method_block
+            if_block_1]
+        }
+    }
+    @Example4{
+        @Input{
+            [public static void main(String args[]){
+                int x = 10;
+                for(int i = 0; i < x; i++){
+                    System.out.print(i);
+                }
+                System.out.print('this is ten numbers');
+            }]
+        }
+        @Output{
+        [method_block
+            for_block_1]
+        }
+    }
+    @Example5{
+        @Input{
+            [public static void main(String []args) {
+                for(int i = 0; i < 10; i++){
+                    for(int j = 0; j < 10; j++){
+                        if(i * 10 + j <= 29){
+                            System.out.print("" + i + j +"  ");
+                        }
+                    }
+                    System.out.println("\n -------------------------------------- \n");
+                }
+                for(int k = 0; k < 10; k++){
+                    System.out.print(k+" ");
+                }
+                System.out.println("输出完毕！");
+            }]
+        }
+        @Output{
+        [method_block
+            for_block_1
+                for_block_2
+                    if_block_1
+            for_block_3]
+        }
+    }
+    @Example6{
+        @Input{
+            [public static void main(String args[]){
+                char grade = 'C';
+                switch(grade)
+                {
+                    case 'A' :
+                        System.out.println("完美");
+                    case 'B' :
+                        System.out.println("优秀");
+                    case 'C' :
+                        System.out.println("良好");
+                    case 'D' :
+                        System.out.println("及格");
+                    case 'F' :
+                        System.out.println("挂科");
+                    default :
+                        System.out.println("");
+                }
+                System.out.println("你的等级是：" + grade);
+            }]
+        }
+        @Output{
+        [method_block
+            switch_block_1]
+        }
+        }
+    }
+}

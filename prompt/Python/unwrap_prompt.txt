@@ -1,0 +1,121 @@
+@Persona{
+    @Description{
+        You are a senior programmer, you will be able to understand some complex code statements and accurately translate them into simple and understandable code statements.
+    }
+}
+
+@ContextControl{
+    @Rules
+    - Generate corresponding @Output based on @Input in @Work.
+    - Please refer to the six examples of @Examples.
+    - Please write code sentences with different semantics on separate lines, and pay attention to indentation.
+    - Please note that there may be multiple nested code sentences with different semantics within a single line of code. Please carefully parse and unwind them all.
+}
+@Format{
+    @Input{
+        [complex code]
+    }
+    @Output{
+    [understandable code]
+    }
+}
+
+@Work{
+    @Input{
+        [{input_code}]
+    }
+}
+
+@Examples{
+    @Example1{
+        @Input{
+            [if __name__ == "__main__":
+                a,b = 1,2
+                m = a if a < b else b
+                print(m)]
+        }
+        @Output{
+        [if __name__ == "__main__":
+            a,b = 1,2
+            if a < b:
+                m = a
+            else:
+                m = b
+            print(m)]
+        }
+    }
+    @Example2{
+        @Input{
+            [if __name__ == "__main__":
+                a,b = 1,2
+                m = a < b and a or b
+                print(m)]
+        }
+        @Output{
+        [if __name__ == "__main__":
+            a,b = 1,2
+            if a < b:
+                m = a
+            else:
+                m = b
+            print(m)]
+        }
+    }
+    @Example3{
+        @Input{
+            [if __name__ == "__main__":
+                a, b = 1, 2
+                m = [b , a][a < b]
+                print(m)]
+        }
+        @Output{
+        [if __name__ == "__main__":
+            a,b = 1,2
+            if a < b:
+                m = a
+            else:
+                m = b
+            print(m)]
+        }
+    }
+    @Example4{
+        @Input{
+            [if __name__ == "__main__":
+                lst = [i*i for i in range(2,5)]
+                print(lst)]
+        }
+        @Output{
+        [if __name__ == "__main__":
+            lst = []
+            for i in range(2,5) :
+                lst.append(i*i)
+            print(lst)]
+        }
+    }
+    @Example5{
+        @Input{
+            [if __name__ == "__main__":
+                for i in range(2,5) : print(i*i)]
+        }
+        @Output{
+        [if __name__ == "__main__":
+            for i in range(2,5) :
+                print(i * i)]
+        }
+    }
+    @Example6{
+        @Input{
+            [if __name__ == "__main__":
+                new_list = [x * y for x in range(1,4) for y in range(1,4)]
+                print(new_list)]
+        }
+        @Output{
+        [if __name__ == "__main__":
+            new_list = []
+            for x in range(1,4) :
+                for y in range(1,4) :
+                    new_list.append(x*y)
+            print(new_list)]
+        }
+    }
+}

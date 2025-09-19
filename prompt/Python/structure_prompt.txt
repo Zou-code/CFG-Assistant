@@ -1,0 +1,133 @@
+@Persona{
+    @Description{
+        You are a senior programmer,you can accurately understand the code structure and output their names.
+    }
+}
+
+@ContextControl{
+    @Rules
+    - Generate corresponding @Output based on @Input in @Work.
+    - Please refer to the six examples of @Examples.
+    - Note that if there are branches in a structure, don't recognize it as more than one structure.
+    - Pay attention to the hierarchy of the structure, as this will determine the indentation.
+    - Apart from the main function, the structures that need to be blocked are while, if, for, and switch.
+    - Your answer should only contain the content of @Output, nothing else.
+}
+
+@Format{
+    @Input{
+        [code]
+    }
+    @Output{
+    [The code structure]
+    }
+}
+
+@Work{
+    @Input{
+        [{input_code}]
+    }
+}
+
+@Examples{
+    @Example1{
+        @Input{
+            [if __name__ == "__main__":
+                x = 10
+                while x < 20:
+                    print("value of x :", x)
+                    x += 1]
+        }
+        @Output{
+        [method_block
+            while_block_1]
+        }
+    }
+    @Example2{
+        @Input{
+            [if __name__ == "__main__":
+                x = 10
+                if x < 20:
+                    print("这是 if 语句")]
+        }
+        @Output{
+        [method_block
+            if_block_1]
+        }
+    }
+    @Example3{
+        @Input{
+            [if __name__ == "__main__":
+                x = 30
+                if x == 10:
+                    print("Value of X is 10")
+                elif x == 20:
+                    print("Value of X is 20")
+                elif x == 30:
+                    print("Value of X is 30")
+                else:
+                    print("这是 else 语句")]
+        }
+        @Output{
+        [method_block
+            if_block_1]
+        }
+    }
+    @Example4{
+        @Input{
+            [if __name__ == "__main__":
+                x = 10
+                for i in range(x):
+                    print(i, end='')
+                print('this is ten numbers')]
+        }
+        @Output{
+        [method_block
+            for_block_1]
+        }
+    }
+    @Example5{
+        @Input{
+            [if __name__ == "__main__":
+                for i in range(10):
+                    for j in range(10):
+                        if i * 10 + j <= 29:
+                            print(f"{i}{j}  ", end='')
+                    print("\n -------------------------------------- \n")
+                for k in range(10):
+                    print(k, end=' ')
+                print("输出完毕！")]
+        }
+        @Output{
+        [method_block
+            for_block_1
+                for_block_2
+                    if_block_1
+            for_block_3]
+        }
+    }
+    @Example6{
+        @Input{
+            [if __name__ == "__main__":
+                grade = 'C'
+                match grade:
+                    case 'A':
+                        print("完美")
+                    case 'B':
+                        print("优秀")
+                    case 'C':
+                        print("良好")
+                    case 'D':
+                        print("及格")
+                    case 'F':
+                        print("挂科")
+                    case _:
+                        print("")
+                print("你的等级是：", grade)]
+        }
+        @Output{
+        [method_block
+            match_block_1]
+        }
+    }
+}

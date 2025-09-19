@@ -1,0 +1,346 @@
+example1:
+input:
+public static void main(String[] args) {
+    int x = 10;
+    while( x < 20 ) {
+        System.out.print("value of x : " + x );
+        x++;
+        System.out.print("\n");
+    }
+}
+method_block
+    while_block_1
+output:
+*method_block*
+public static void main(String[] args) {
+    int x = 10;
+    while_block_1
+}
+*while_block_1*
+while( x < 20 ) {
+    System.out.print("value of x : " + x );
+    x++;
+    System.out.print("\n");
+}
+
+example2:
+input:
+public static void main(String args[]) {
+    for(int i=1;i<=9;i++){
+        for(int j=1;j<=i;j++){
+            System.out.print(j+"*"+i+"="+i*j+" ");
+        }
+        System.out.println();
+    }
+}
+method_block
+    for_block_1
+        for_block_2
+output:
+*method_block*
+public static void main(String args[]) {
+    for_block_1
+}
+*for_block_1*
+for(int i=1;i<=9;i++){
+    for_block_2
+    System.out.println();
+}
+*for_block_2*
+for(int j=1;j<=i;j++){
+    System.out.print(j+"*"+i+"="+i*j+" ");
+}
+
+example3:
+input:
+public static void main(String[] args){
+    int [] numbers = {10, 20, 30, 40, 50};
+    for(int x : numbers ){
+        System.out.print( x );
+        System.out.print(",");
+    }
+    System.out.print("\n");
+    String [] names ={"James", "Larry", "Tom", "Lacy"};
+    for( String name : names ) {
+        System.out.print( name );
+        System.out.print(",");
+    }
+}
+method_block
+    for_block_1
+    for_block_2
+output:
+*method_block*
+public static void main(String[] args){
+    int [] numbers = {10, 20, 30, 40, 50};
+    for_block_1
+    System.out.print("\n");
+    String [] names ={"James", "Larry", "Tom", "Lacy"};
+    for_block_2
+}
+*for_block_1*
+for(int x : numbers ){
+    System.out.print( x );
+    System.out.print(",");
+}
+*for_block_2*
+for( String name : names ) {
+    System.out.print( name );
+    System.out.print(",");
+}
+
+example4:
+input:
+public static void main(String args[]){
+    int x = 10;
+    if( x < 20 ){
+        System.out.print("这是 if 语句");
+    }
+}
+method_block
+    if_block_1
+output:
+*method_block*
+public static void main(String args[]){
+    int x = 10;
+    if_block_1
+}
+*if_block_1*
+if( x < 20 ){
+    System.out.print("这是 if 语句");
+}
+
+example5:
+input:
+public static void main(String args[]){
+    int x = 30;
+    if( x == 10 ){
+        System.out.print("Value of X is 10");
+    }else if( x == 20 ){
+        System.out.print("Value of X is 20");
+    }else if( x == 30 ){
+        System.out.print("Value of X is 30");
+    }else{
+        System.out.print("这是 else 语句");
+    }
+}
+method_block
+    if_block_1
+output:
+*method_block*
+public static void main(String args[]){
+    int x = 30;
+    if_block_1
+}
+*if_block_1*
+if( x == 10 ){
+    System.out.print("Value of X is 10");
+}else if( x == 20 ){
+    System.out.print("Value of X is 20");
+}else if( x == 30 ){
+    System.out.print("Value of X is 30");
+}else{
+    System.out.print("这是 else 语句");
+}
+
+example6:
+input:
+public static void main(String args[]){
+    int x = 30;
+    int y = 10;
+    if( x == 30 ){
+        if( y == 10 ){
+        System.out.print("X = 30 and Y = 10");
+        }
+    }
+}
+method_block
+    if_block_1
+        if_block_2
+output:
+*method_block*
+public static void main(String args[]){
+    int x = 30;
+    int y = 10;
+    if_block_1
+}
+*if_block_1*
+if( x == 30 ){
+    if_block_2
+}
+*if_block_2*
+if( y == 10 ){
+    System.out.print("X = 30 and Y = 10");
+}
+
+example7:
+input:
+public static void main(String []args) {
+    label:
+    for(int i = 0; i < 10; i++){
+        for(int j = 0; j < 10; j++){
+            if(i * 10 + j > 29){
+                break label;
+            }
+            System.out.print("" + i + j +"  ");
+        }
+        System.out.println("\n -------------------------------------- \n");
+    }
+    System.out.println("输出完毕！");
+}
+method_block
+    for_block_1
+        for_block_2
+            if_block_1
+output:
+*method_block*
+public static void main(String []args) {
+    for_block_1
+    System.out.println("输出完毕！");
+}
+*for_block_1*
+for(int i = 0; i < 10; i++){
+    for_block_2
+    System.out.println("\n -------------------------------------- \n");
+}
+*for_block_2*
+for(int j = 0; j < 10; j++){
+    if_block_1
+    System.out.print("" + i + j +"  ");
+}
+*if_block_1*
+if(i * 10 + j > 29){
+    break;
+}
+
+example8:
+input:
+public static void main(String args[]){
+    char grade = 'C';
+    switch(grade)
+    {
+        case 'A' :
+            System.out.println("完美");
+            break;
+        case 'B' :
+            System.out.println("优秀");
+            break;
+        case 'C' :
+            System.out.println("良好");
+            break;
+        case 'D' :
+            System.out.println("及格");
+            break;
+        case 'F' :
+            System.out.println("挂科");
+            break;
+        default :
+            System.out.println("未知");
+    }
+    System.out.println("你的等级是：" + grade);
+}
+method_block
+    switch_block_1
+output:
+*method_block*
+public static void main(String args[]){
+    char grade = 'C';
+    switch_block_1
+    System.out.println("你的等级是：" + grade);
+}
+*switch_block_1*
+switch(grade)
+{
+    case 'A' :
+        System.out.println("完美");
+        break;
+    case 'B' :
+        System.out.println("优秀");
+        break;
+    case 'C' :
+        System.out.println("良好");
+        break;
+    case 'D' :
+        System.out.println("及格");
+        break;
+    case 'F' :
+        System.out.println("挂科");
+        break;
+    default :
+        System.out.println("未知");
+}
+
+example9:
+input:
+public static void main(String args[]){
+    int i = 1;
+    switch(i){
+        case 0:
+            System.out.println("0");
+        case 1:
+            System.out.println("1");
+        case 2:
+            System.out.println("2");
+        default:
+            System.out.println("default");
+    }
+}
+method_block
+    switch_block_1
+output:
+*method_block*
+public static void main(String args[]){
+    int i = 1;
+    switch_block_1
+}
+*switch_block_1*
+switch(i){
+    case 0:
+        System.out.println("0");
+    case 1:
+        System.out.println("1");
+    case 2:
+        System.out.println("2");
+    default:
+        System.out.println("default");
+}
+
+example10:
+input:
+public static void main(String args[]){
+	int i = 1;
+	int end = 100;
+	int count = 3;
+	while (i <= end){
+	    if (i % count == 0){
+	        System.out.println("i="+i);
+	    }
+	    i++;
+	}
+}
+method_block
+    while_block_1
+        if_block_1
+output:
+*method_block*
+public static void main(String args[]){
+	int i = 1;
+	int end = 100;
+	int count = 3;
+    while_block_1
+}
+*while_block_1*
+while (i <= end){
+    if_block_1
+	i++;
+}
+*if_block_1*
+if (i % count == 0){
+    System.out.println("i="+i);
+}
+
+Please refer to the above ten examples and output the corresponding 'output' according to the following 'input'. Note that the output 'output' format should be strictly consistent with the example, including the indentation of the code and the symbol '*'.
+input:
+{input_code}
+{input_structure}
+output:
