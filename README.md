@@ -1,23 +1,17 @@
 # 🔄 CFG Assistant - 控制流图生成助手
 
-一个基于AI的智能控制流图(Control Flow Graph)生成工具，支持多种编程语言，能够自动分析代码结构并生成可视化的控制流图。
-
 ![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)
 ![Vue.js](https://img.shields.io/badge/Vue.js-3.x-brightgreen.svg)
 
 ## 📋 项目简介
 
-CFG Assistant 是一个现代化的Web应用程序，利用大型语言模型(LLM)技术自动分析代码并生成对应的控制流图。该项目采用前后端分离架构，提供RESTful API和直观的用户界面。
-
-### ✨ 主要特性
+CFG Assistant 是一个现代化的Web应用程序，利用大型语言模型(LLM)技术自动分析代码并生成对应的控制流图。
 
 - **🎯 多语言支持**: Python、Java、C语言
-- **🤖 AI驱动**: 基于GPT和DeepSeek模型
 - **📊 可视化**: 自动生成PNG格式的控制流图
 - **⚡ 现代化**: FastAPI后端 + Vue3前端
 - **🔧 可配置**: 支持多种AI模型和参数调整
-- **📱 响应式**: 适配各种设备屏幕
 
 ## 🚀 快速开始
 
@@ -72,8 +66,6 @@ API Key:
 1. **OpenAI API密钥**：
    - 访问 [OpenAI官网](https://platform.openai.com/api-keys)
    - 注册账户并创建API密钥
-   - 新用户通常有免费试用额度
-
 2. **DeepSeek API密钥**（可选）：
    - 访问 [DeepSeek官网](https://platform.deepseek.com/api-keys)
    - 注册账户并获取API密钥
@@ -162,7 +154,7 @@ public static void heapsort(int[] a) {
 
 #### 可调参数
 
-- **温度参数**: 0.0-2.0，控制生成结果的随机性
+- **温度参数**: 控制生成结果的随机性
 - **最大令牌数**: 控制生成内容的长度
 - **客户端选择**: OpenAI或DeepSeek
 
