@@ -1,23 +1,19 @@
 # 🔄 CFG Assistant - Control Flow Graph Generation Agent
 
-An AI-powered intelligent Control Flow Graph generation tool that supports multiple programming languages and can automatically analyze code structure to generate visual control flow graphs.
-
 ![Python](https://img.shields.io/badge/Python-3.8+-blue.svg)
 ![FastAPI](https://img.shields.io/badge/FastAPI-0.104+-green.svg)
 ![Vue.js](https://img.shields.io/badge/Vue.js-3.x-brightgreen.svg)
 
 ## 📋 Project Overview
 
-CFG Assistant is a modern web application that utilizes Large Language Model (LLM) technology to automatically analyze code and generate corresponding control flow graphs. The project adopts a front-end and back-end separation architecture, providing RESTful APIs and an intuitive user interface.
+CFG Assistant is a modern web application that utilizes Large Language Model (LLM) technology to automatically analyze code and generate corresponding control flow graphs. 
 
 ### ✨ Key Features
 
 - **🎯 Multi-language Support**: Python, Java, C Language
-- **🤖 AI-driven**: Based on GPT and DeepSeek models
 - **📊 Visualization**: Automatically generates PNG format control flow graphs
 - **⚡ Modern**: FastAPI backend + Vue3 frontend
 - **🔧 Configurable**: Supports multiple AI models and parameter adjustments
-- **📱 Responsive**: Adapts to various device screens
 
 ## 🚀 Quick Start
 
@@ -72,8 +68,6 @@ API Key:
 1. **OpenAI API Key**:
    - Visit [OpenAI Official Website](https://platform.openai.com/api-keys)
    - Register an account and create an API key
-   - New users usually have free trial credits
-
 2. **DeepSeek API Key** (optional):
    - Visit [DeepSeek Official Website](https://platform.deepseek.com/api-keys)
    - Register an account and get an API key
@@ -162,7 +156,7 @@ public static void heapsort(int[] a) {
 
 #### Adjustable Parameters
 
-- **Temperature Parameter**: 0.0-2.0, controls randomness of generated results
+- **Temperature Parameter**: controls randomness of generated results
 - **Maximum Tokens**: Controls length of generated content
 - **Client Selection**: OpenAI or DeepSeek
 
